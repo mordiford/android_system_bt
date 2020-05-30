@@ -53,7 +53,9 @@ typedef enum {
   BTAV_A2DP_CODEC_INDEX_SOURCE_AAC,
   BTAV_A2DP_CODEC_INDEX_SOURCE_APTX,
   BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_HD,
+  BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_ADAPTIVE,
   BTAV_A2DP_CODEC_INDEX_SOURCE_LDAC,
+  BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_TWS,
 
   BTAV_A2DP_CODEC_INDEX_SOURCE_MAX,
 
@@ -62,6 +64,7 @@ typedef enum {
   // Add an entry for each sink codec here
   BTAV_A2DP_CODEC_INDEX_SINK_SBC = BTAV_A2DP_CODEC_INDEX_SINK_MIN,
   BTAV_A2DP_CODEC_INDEX_SINK_AAC,
+  BTAV_A2DP_CODEC_INDEX_SINK_APTX,
   BTAV_A2DP_CODEC_INDEX_SINK_LDAC,
 
   BTAV_A2DP_CODEC_INDEX_SINK_MAX,
@@ -146,14 +149,23 @@ typedef struct {
       case BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_HD:
         codec_name_str = "aptX HD";
         break;
+      case BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_ADAPTIVE:
+        codec_name_str = "aptX Adaptive";
+        break;
       case BTAV_A2DP_CODEC_INDEX_SOURCE_LDAC:
         codec_name_str = "LDAC";
+        break;
+      case BTAV_A2DP_CODEC_INDEX_SOURCE_APTX_TWS:
+        codec_name_str = "aptX TWS";
         break;
       case BTAV_A2DP_CODEC_INDEX_SINK_SBC:
         codec_name_str = "SBC (Sink)";
         break;
       case BTAV_A2DP_CODEC_INDEX_SINK_AAC:
         codec_name_str = "AAC (Sink)";
+        break;
+      case BTAV_A2DP_CODEC_INDEX_SINK_APTX:
+        codec_name_str = "APTX (Sink)";
         break;
       case BTAV_A2DP_CODEC_INDEX_SINK_LDAC:
         codec_name_str = "LDAC (Sink)";
@@ -305,7 +317,8 @@ typedef struct {
    */
   bt_status_t (*init)(btav_source_callbacks_t* callbacks,
                       int max_connected_audio_devices,
-                      std::vector<btav_a2dp_codec_config_t> codec_priorities);
+                      std::vector<btav_a2dp_codec_config_t> codec_priorities,
+                      std::vector<btav_a2dp_codec_config_t> offload_enabled_codecs);
 
   /** connect to headset */
   bt_status_t (*connect)(const RawAddress& bd_addr);
